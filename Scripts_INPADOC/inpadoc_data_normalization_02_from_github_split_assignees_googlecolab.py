@@ -50,6 +50,10 @@ Original file is located at
    - Split the 'AE' column by the semicolon delimiter and create a new dataframe with split values in separate columns.
    - Join this new dataframe with the original dataframe to retain 'PN' and 'AE' columns.
    - Reshape the dataframe to get unique values from each column, dropping NaN values and the 'Coluna' column.
+   - Split the 'assignee_split' column in 3 new columns:
+     (a) assignee_name - registeed name;
+     (b) assignee_abbreviation - assignee_name abbreviation
+     (c) assignee_individual_legal - natural or legal person
 
 6. **Print Information and Sample Data:**
    - Print the length and count of unique values in the 'assignee_split' column.
