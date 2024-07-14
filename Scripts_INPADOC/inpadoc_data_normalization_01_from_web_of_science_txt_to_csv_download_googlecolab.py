@@ -28,7 +28,7 @@ Original file is located at
 * Export: "Tab delimited file"
 * Record Content: Full Record
 
-**Main steps:**
+**About this Notebook:**
 
 1. Downloads text files from [GitHub](https://github.com/andrelmfsantos/INPADOC-Data-Normalization/tree/main/Exports_Web_of_Science).
 2. Converts each file into a DataFrame.
