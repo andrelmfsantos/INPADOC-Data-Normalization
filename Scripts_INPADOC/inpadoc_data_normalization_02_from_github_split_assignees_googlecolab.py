@@ -165,6 +165,55 @@ print("-----------------------")
 # Sort the DataFrame by 'publication_number' and take a random sample of 10 rows
 df_stacked.sort_values(by = ['PN'], ascending = False).sample(10, random_state = 43)
 
+# @title Split the 'assignee_split' column and create new columns to individual and legal person
+#import pandas as pd
+
+# Function to split the 'assignee_split' column and create new columns
+def split_assignee_column(df):
+    # Extracting the 'assignee_name'
+    df['assignee_name'] = df['assignee_split'].str.extract(r'^(.*?)\s*\(')
+
+    # Extracting the 'assignee_abbreviation'
+    df['assignee_abbreviation'] = df['assignee_split'].str.extract(r'\((.*?)-')
+
+    # Extracting the 'assignee_individual_legal'
+    df['assignee_individual_legal'] = df['assignee_split'].str.extract(r'\((.{5})(.*)\)')[1]
+
+    return df
+
+# Simulating the combined dataframe with the 'assignee_split' column
+#data = {
+#    'assignee_split': [
+#        "ETERNIVAX BIOMEDICAL INC (ETER-Non-standard)",
+#        "GENETECH PHARMA (GEN-Standard)",
+#        "HEALTHY LIFE CORP (HL-Non-standard)"
+#    ]
+#}
+#combined_data = pd.DataFrame(data)
+
+# Applying the function to create new columns
+df_stacked = split_assignee_column(df_stacked)
+
+# Displaying the dataframe to show the result
+df_stacked.head()
+
+"""## Assignee terms
+In the assignee column of a patent database, the following terms have specific meanings:
+
+1. **C (Company)**: This indicates that the assignee of the patent is a company or a corporate entity. This means the rights to the patent are held by a business organization rather than an individual.
+
+2. **Individual**: This indicates that the assignee is an individual person. The rights to the patent are held by a single inventor or a person rather than a corporation or organization.
+
+3. **Non-standard**: This term is used for assignees that do not fit into the typical categories of companies, individuals, or recognized institutions. It may include various types of organizations or entities that do not conform to the standard classifications.
+
+4. **Soviet Institute**: This specifically refers to research institutes or organizations that were part of the Soviet Union. These institutes were often involved in scientific research and development and were common assignees for patents filed during the era of the Soviet Union.
+
+These terms help categorize the ownership of patents and provide insight into who holds the rights to the inventions.
+"""
+
+# @title Count individual and legal person
+df_stacked.groupby('assignee_individual_legal').size().reset_index(name='count')
+
 # @title Download the csv file
 
 # Define folder name and file path
